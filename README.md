@@ -2,9 +2,10 @@
 
 ## Copy paste heaven
 
-Build it: 
+Build and run: 
 
 ```
-cmake -H. -Bbuild
-cmake --build build -- -j3
+cmake -H. -Bbuild && cmake --build build -- -j3 && ./bin/rlcpp
 ```
+
+
