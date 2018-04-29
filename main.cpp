@@ -20,14 +20,15 @@ void printer_limited() {
   last_call = now;
 }
 
-class Limiter {
+class DumbLimiter {
 
   int rps;
   void (*limited)();
 
 public:
-  // rps is requests per second and limited is the function to be rate limited
-  Limiter(int rps, void (*limited)()) {
+  // "rps" is requests per second and "limited" is the function to be rate
+  // limited
+  DumbLimiter(int rps, void (*limited)()) {
     this->limited = limited;
     this->rps = rps;
   }
@@ -41,7 +42,7 @@ public:
 int main(void) {
   using namespace std::literals::chrono_literals;
 
-  Limiter limiter(1, printer_limited);
+  DumbLimiter limiter(1, printer_limited);
   limiter.call();
   limiter.call();
   limiter.call();
