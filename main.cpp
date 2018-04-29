@@ -22,13 +22,18 @@ void printer_limited() {
 
 class Limiter {
 
+  int rps;
   void (*limited)();
 
 public:
-  Limiter(void (*limited)()) { this->limited = limited; }
+  // rps is requests per second and limited is the function to be rate limited
+  Limiter(int rps, void (*limited)()) {
+    this->limited = limited;
+    this->rps = rps;
+  }
 
   void call() {
-    std::this_thread::sleep_for(2s);
+    std::this_thread::sleep_for(1s / rps);
     limited();
   }
 };
@@ -36,15 +41,10 @@ public:
 int main(void) {
   using namespace std::literals::chrono_literals;
 
-  Limiter limiter(printer_limited);
+  Limiter limiter(1, printer_limited);
+  limiter.call();
   limiter.call();
   limiter.call();
 
-  /*
-  printer_limited();
-  std::cout << std ::flush;
-  std::this_thread::sleep_for(2s);
-  printer_limited();
-  */
   return (0);
 }
