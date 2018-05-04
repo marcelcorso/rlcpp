@@ -10,4 +10,9 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 include_directories("${PROJECT_SOURCE_DIR}")
 
-add_executable(rlcpp ${PROJECT_SOURCE_DIR}/main.cpp)
+include_directories ("${PROJECT_SOURCE_DIR}/dumb")
+add_subdirectory (dumb) 
+
+add_executable(rlcpp ${PROJECT_SOURCE_DIR}/main.cc)
+
+target_link_libraries (rlcpp dumb)

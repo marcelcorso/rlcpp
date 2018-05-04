@@ -2,6 +2,8 @@
 #include <iostream>
 #include <thread>
 
+#include "dumb.h"
+
 using namespace std;
 
 bool first_call = true;
@@ -20,28 +22,7 @@ void printer_limited() {
   last_call = now;
 }
 
-class DumbLimiter {
-
-  int rps;
-  void (*limited)();
-
-public:
-  // "rps" is requests per second and "limited" is the function to be rate
-  // limited
-  DumbLimiter(int rps, void (*limited)()) {
-    this->limited = limited;
-    this->rps = rps;
-  }
-
-  void call() {
-    std::this_thread::sleep_for(1s / rps);
-    limited();
-  }
-};
-
 int main(void) {
-  using namespace std::literals::chrono_literals;
-
   DumbLimiter limiter(1, printer_limited);
   limiter.call();
   limiter.call();
