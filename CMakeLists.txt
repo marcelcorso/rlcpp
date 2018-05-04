@@ -12,7 +12,9 @@ include_directories("${PROJECT_SOURCE_DIR}")
 
 include_directories ("${PROJECT_SOURCE_DIR}/dumb")
 add_subdirectory (dumb) 
+include_directories ("${PROJECT_SOURCE_DIR}/timer")
+add_subdirectory (timer)
 
 add_executable(rlcpp ${PROJECT_SOURCE_DIR}/main.cc)
 
-target_link_libraries (rlcpp dumb)
+target_link_libraries (rlcpp dumb timer)
