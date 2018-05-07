@@ -24,17 +24,26 @@ void printer_callback(std::string message) {
   last_call = now;
 }
 
+void call_many(TimerLimiter *tl, std::string name) {
+  std::cout << "pingo" << name;
+  // tl->call(name + ": timer alpha");
+  // tl->call(name + ": timer beta");
+  // tl->call(name + ": timer gamma");
+}
+
 int main(void) {
   DumbLimiter limiter(1, printer_callback);
   limiter.call("dumb 1");
-  limiter.call("dumb 2");
-  limiter.call("dumb 3");
 
   TimerLimiter tl(1, printer_callback);
-  tl.call("timer alpha");
-  tl.call("timer beta");
-  tl.call("timer gamma");
+  std::thread tt1(call_many, &tl, "one");
+  std::thread tt2(call_many, &tl, "two");
+  std::thread tt3(call_many, &tl, "three");
+
   tl.join();
+  tt1.join();
+  tt2.join();
+  tt3.join();
 
   return (0);
 }
