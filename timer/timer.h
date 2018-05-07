@@ -13,6 +13,7 @@ class TimerLimiter {
   void (*callback)(std::string);
 
   std::thread thread;
+  std::mutex mutex;
   std::queue<std::string> queue;
 
   void worker();
